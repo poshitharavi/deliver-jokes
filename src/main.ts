@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger } from '@nestjs/common';
+import * as dotenv from 'dotenv';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -8,6 +9,7 @@ async function bootstrap() {
 
   app.setGlobalPrefix(globalPrefix);
   app.enableCors();
+  dotenv.config();
 
   const port = process.env.PORT || 3010;
   await app.listen(port);

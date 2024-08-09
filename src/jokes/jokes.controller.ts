@@ -32,10 +32,10 @@ export class JokesController {
       const newJoke = await this.jokeService.createJoke(createJokeDto);
 
       // Add the category
-      await this.categoryService.createCategory({
-        name: createJokeDto.category,
-        description: createJokeDto.category,
-      });
+      // await this.categoryService.createCategory({
+      //   name: createJokeDto.category,
+      //   description: createJokeDto.category,
+      // });
 
       return response.status(StatusCodes.OK).json({
         statusCode: StatusCodes.OK,
