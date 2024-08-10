@@ -24,7 +24,7 @@ steps:
     args:
       - 'run'
       - 'deploy'
-      - 'deliver-jokes--staging'
+      - 'deliver-jokes'
       - '--image'
       - 'gcr.io/$PROJECT_ID/deliver-jokes:$COMMIT_SHA'
       - '--region'
