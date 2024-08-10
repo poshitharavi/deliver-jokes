@@ -2,38 +2,25 @@ options:
   logging: CLOUD_LOGGING_ONLY
 
 steps:
-  # Step 1: Authenticate with Google Cloud (optional, but recommended)
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        gcloud auth configure-docker
-
-  # Step 2: Build the Docker image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/deliver-jokes:$COMMIT_SHA', '.']
-
-  # Step 3: Push the Docker image to Google Container Registry
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA', '.']
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/deliver-jokes:$COMMIT_SHA']
-
-  # Step 4: Deploy to Cloud Run
+    args: ['push', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA']
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'gcloud'
+    entrypoint: gcloud
     args:
       - 'run'
       - 'deploy'
-      - 'deliver-jokes'
-      - '--image'
-      - 'gcr.io/$PROJECT_ID/deliver-jokes:$COMMIT_SHA'
-      - '--region'
-      - 'us-central1'
-      - '--platform'
-      - 'managed'
+      - '$_SERVICE_NAME'
+      - '--image=gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA'
+      - '--region=$_REGION'
+      - '--add-cloudsql-instances=$_INSTANCE_CONNECTION_NAME'
+      - '--set-env-vars=DATABASE_URL=postgresql://$_DB_USER:$_DB_PASSWORD@/$_DB_NAME?host=/cloudsql/$_INSTANCE_CONNECTION_NAME'
       - '--allow-unauthenticated'
-
-images:
-  - 'gcr.io/$PROJECT_ID/deliver-jokes:$COMMIT_SHA'
-
-serviceAccount: '502810113594-compute@developer.gserviceaccount.com'
+substitutions:
+  _SERVICE_NAME: deliver-jokes
+  _REGION: us-central1
+  _INSTANCE_CONNECTION_NAME: jokeinstance
+  _DB_USER: testUser
+  _DB_PASSWORD: 8n{sg&oHaD6Ch
+  _DB_NAME: jokes
