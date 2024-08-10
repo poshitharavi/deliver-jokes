@@ -31,7 +31,7 @@ steps:
       - 'us-central1'
       - '--platform'
       - 'managed'
-       - '--set-env-vars=DATABASE_URL=mysql://testUser:8n{sg&oHaD6Ch@35.184.42.224:3306/jokes?host=/cloudsql/jokeinterview:us-central1:jokeinstance'
+       - '--set-env-vars=DATABASE_URL=mysql://testUser:8n{sg&oHaD6Ch@localhost/jokes?host=/cloudsql/jokeinterview:us-central1:jokeinstance'
       - '--allow-unauthenticated'
 substitutions:
   _SERVICE_NAME: deliver-jokes
