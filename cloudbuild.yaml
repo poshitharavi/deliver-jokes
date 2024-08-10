@@ -36,4 +36,4 @@ steps:
 images:
   - 'gcr.io/$PROJECT_ID/deliver-jokes:$COMMIT_SHA'
 
-serviceAccount: '502810113594-compute@developer.gserviceaccount.com'
+spec.template.spec.serviceAccountName: '502810113594-compute@developer.gserviceaccount.com'
