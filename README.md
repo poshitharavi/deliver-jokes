@@ -1,73 +1,138 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Jokes Microservices Platform
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This platform allows users to submit and view jokes using a microservices architecture. The backend services are built with NestJS, the frontend is developed using Next.js, and the platform is containerized using Docker. It is hosted on Google Cloud Platform (GCP) and Vercel.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Table of Contents
 
-## Description
+- [Overview](#overview)
+- [Architecture](#architecture)
+- [Technologies Used](#technologies-used)
+- [Repositories](#repositories)
+- [Hosted URLs](#hosted-urls)
+- [Environment Setup](#environment-setup)
+- [Running Locally](#running-locally)
+- [Additional Resources](#additional-resources)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Overview
 
-## Installation
+This project is a microservices-based joke platform. Users can submit jokes and view them through a frontend interface. The platform consists of two backend services: one for submitting jokes and another for delivering jokes. The frontend is hosted on Vercel, while the backend services are hosted on Google Cloud Run.
 
-```bash
-$ yarn install
+## Architecture
+
+- **Frontend**: Built using Next.js and hosted on Vercel.
+- **Backend**: Built with NestJS using two microservices:
+  - **Submit Jokes Service**: Handles joke submissions and stores them in MongoDB.
+  - **Deliver Jokes Service**: Retrieves jokes from a MySQL database and serves them to the frontend.
+- **Databases**:
+  - **MongoDB**: Used for storing submitted jokes.
+  - **MySQL**: Used for storing and retrieving delivered jokes.
+- **Message Broker**: RabbitMQ is used to trigger and manage communication between the microservices.
+
+## Technologies Used
+
+- **AI Tools**:
+  - [Perplexity AI](https://www.perplexity.ai/)
+  - [ChatGPT](https://chatgpt.com)
+- **Hosting Platforms**:
+  - [Google Cloud Platform (GCP)](https://cloud.google.com/)
+  - [Vercel](https://vercel.com/)
+- **Databases**:
+  - MongoDB (Cloud MongoDB)
+  - SQL (Cloud SQL on GCP)
+- **Backend Framework**: NestJS
+- **Frontend Framework**: Next.js
+- **ORM**: Prisma
+- **Containerization**: Docker
+- **Message Broker**: RabbitMQ
+
+## Repositories
+
+- **Frontend**: [Jokes Frontend Repo](https://github.com/poshitharavi/jokes-front)
+- **Submit Jokes Server**: [Submit Jokes Repo](https://github.com/poshitharavi/submit-jokes)
+- **Deliver Jokes Server**: [Deliver Jokes Repo](https://github.com/poshitharavi/deliver-jokes)
+
+## Hosted URLs
+
+- **Frontend**: [https://jokes-front.vercel.app/](https://jokes-front.vercel.app/)
+- **Submit Jokes Service**: [https://submit-jokes-sopoqaryjq-uc.a.run.app](https://submit-jokes-sopoqaryjq-uc.a.run.app)
+- **Deliver Jokes Service**: [https://deliver-jokes-sopoqaryjq-uc.a.run.app](https://deliver-jokes-sopoqaryjq-uc.a.run.app) (Note: Deployed but currently experiencing an error)
+
+## Environment Setup
+
+To run the project locally, clone all the repositories and set up the following environment variables:
+
+### Frontend Environment Variables
+
+```
+DELIVERY_JOKE="http://localhost:3010/api"
+SUBMIT_JOKE="http://localhost:3011/api"
 ```
 
-## Running the app
+### Submit Jokes Backend Environment Variables
 
-```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+```
+DATABASE_URL="mongodb+srv://jokeUser:cc09UC26vEdEGU92@jokescluster.gqctc.mongodb.net/jokesDatabase?retryWrites=true&w=majority&appName=JokesCluster"
+PORT=3011
 ```
 
-## Test
+### Deliver Jokes Backend Environment Variables
 
-```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+```
+DATABASE_URL="mysql://testUser:8n{sg&oHaD6Ch@35.184.42.224:3306/jokes"
+PORT=3010
 ```
 
-## Support
+If the Cloud SQL database connection does not work due to GCP security settings, use the following local database connection:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```
+# DATABASE_URL="mysql://root:12345678@localhost:3306/jokes"
+```
 
-## Stay in touch
+## Running Locally
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Backend
 
-## License
+1. **Navigate to the Submit Jokes and Deliver Jokes Repositories:**
 
-Nest is [MIT licensed](LICENSE).
+   ```bash
+   cd submit-jokes
+   cd deliver-jokes
+   ```
+
+2. **Push Database Schema to DB:**
+
+   ```bash
+   yarn prisma db push
+   ```
+
+3. **Start Development Server:**
+
+   ```bash
+   yarn start:dev
+   ```
+
+4. **Start RabbitMQ Listener:**
+
+   ```bash
+   yarn listen
+   ```
+
+### Frontend
+
+1. **Navigate to the Jokes Frontend Repository:**
+
+   ```bash
+   cd jokes-front
+   ```
+
+2. **Start the Frontend Development Server:**
+
+   ```bash
+   yarn next dev
+   ```
+
+## Additional Resources
+
+- **RabbitMQ**: Used for triggering and managing communication between microservices.
+- **Prisma**: Used as the ORM for both MongoDB and MySQL databases.
+- **Docker**: Used for containerizing the application for deployment on Google Cloud Run.
