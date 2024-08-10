@@ -13,6 +13,7 @@ import { Response } from 'express';
 import { CreateJokeDto } from './dtos/create-joke.dto';
 import { getReasonPhrase, StatusCodes } from 'http-status-codes';
 import { CategoryService } from 'src/category/category.service';
+import { EventPattern } from '@nestjs/microservices';
 
 @Controller('jokes')
 export class JokesController {
@@ -59,6 +60,24 @@ export class JokesController {
         error: getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR),
         statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       });
+    }
+  }
+  @EventPattern('jokeCreate')
+  async createNewJokeByEventPattern(
+    createJokeDto: CreateJokeDto,
+  ): Promise<void> {
+    try {
+      const newJoke = await this.jokeService.createJoke(createJokeDto);
+
+      // Add the category
+      await this.categoryService.createCategory({
+        name: createJokeDto.category,
+        description: createJokeDto.category,
+      });
+
+      console.log(`Successfully created new joke`, newJoke);
+    } catch (error) {
+      console.log(error);
     }
   }
 
