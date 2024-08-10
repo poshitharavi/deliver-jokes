@@ -1,32 +1,25 @@
-# Use an official Node.js runtime as the base image
-FROM node:18-alpine
+## Use the official Node.js 16 image as a parent image
+FROM node:22.5.1-alpine
 
-# Set the working directory
-WORKDIR /app
+# Set the working directory in the container
+WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json
+# Copy the package.json and package-lock.json (if available) to the container
 COPY package*.json ./
-
-# Install dependencies
-RUN npm ci
-
-# Copy the Prisma schema
 COPY prisma ./prisma/
 
-# Generate Prisma client
-RUN npx prisma generate
+# Install dependencies
+RUN npm install
 
-# Copy the application code
+# Bundle the source code inside the Docker image
 COPY . .
 
-# Build the application
+# Build your NestJS app
 RUN npm run build
+RUN prisma generate
 
-# Set environment variables
-ENV NODE_ENV=production
-
-# Expose the port
+# Map the port the app runs on
 EXPOSE 8080
 
-# Start the application
-CMD ["npm", "run", "start:prod"]
+# Command to run the app
+CMD [ "npm", "run", "start:prod" ]
