@@ -136,3 +136,9 @@ If the Cloud SQL database connection does not work due to GCP security settings,
 - **RabbitMQ**: Used for triggering and managing communication between microservices.
 - **Prisma**: Used as the ORM for both MongoDB and MySQL databases.
 - **Docker**: Used for containerizing the application for deployment on Google Cloud Run.
+
+## Postman Collection
+
+To test the APIs, you can use the following Postman collection:
+
+[Postman Collection - Jokes Microservices Platform](https://speeding-water-40344.postman.co/workspace/Jokes~ba1e14b3-b044-4cd9-8d82-704821445821/collection/35368452-874b4f13-475b-408c-a942-a12fed859c89?action=share&creator=35368452&active-environment=35368452-83876d7d-fa33-462b-939f-1248a58c2788)
