@@ -31,7 +31,7 @@ steps:
       - 'us-central1'
       - '--platform'
       - 'managed'
-       - '--allow-unauthenticated'
+      - '--allow-unauthenticated'
 substitutions:
   _SERVICE_NAME: deliver-jokes
   _REGION: us-central1
